@@ -289,7 +289,10 @@ NO_ARCHIVES=0
 export SELFPKG
 export NO_ARCHIVES
 
-src=$(curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/efibuild.sh) && eval "$src" || exit 1
+#src=$(curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/efibuild.sh) && eval "$src" || exit 1
+[[ -f efibuild.sh ]] || curl -Lfs "https://raw.githubusercontent.com/acidanthera/ocbuild/master/efibuild.sh" > "efibuild.sh" || exit 1
+src=$(cat "efibuild.sh")
+eval "$src" || exit 1
 
 cd Utilities/ocvalidate || exit 1
 ocv_tool=""
