@@ -13,7 +13,7 @@ serial_dev=$(ioreg -p IODeviceTree -lw0 | perl -e '
       $pcipath =~ s|^((/[^/]*){$indent}).*|$1/|;
       $name = ""; $uid = 0; $classcode = "";
     }
-    
+
     if ( $class eq "IOACPIPlatformDevice" ) { if ( /^[ |]*"name" = <"([^\"]*)">/ ) { $name = $1; }; if ( /^[ |]*"_UID" = "(\d+)"/ ) { $uid = $1; } }
     elsif ( $class eq "IOPCIDevice" ) { if ( /^[ |]*"pcidebug" = "\d+:(\d+):(\d+).*"/ ) { $name = sprintf("Pci(0x%x,0x%x)", $1, $2);  } if ( /^[ |]*"class-code" = <(\w+)>/ ) { $classcode = $1; } }
     if ( /^[ |]*}/ && $name ) {
@@ -27,7 +27,7 @@ serial_dev=$(ioreg -p IODeviceTree -lw0 | perl -e '
       if ( $classcode eq "02000700" ) {
         $serialdevicepath = $pcipath =~ s/.*PciRoot\(0x0\)//r =~ s|/Pci\(||gr =~ s|\)| 00 00 |gr =~ s|0x||gr =~ s|,| |gr =~ s|\b(\w)\b|0\1|gr =~ s|$|FF|r;
         print $ioregpath =~ s|/Root/||r . "\n";
-        print $pcipath =~ s|/*||r  . "\n"; 
+        print $pcipath =~ s|/*||r  . "\n";
         print "xxd -p -r <<< \"" . $serialdevicepath . "\" | base64\n";
         print "\n";
       }
